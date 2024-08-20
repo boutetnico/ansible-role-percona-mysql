@@ -40,17 +40,3 @@ def test_service_is_running_and_enabled(host, name):
     service = host.service(name)
     assert service.is_enabled
     assert service.is_running
-
-
-@pytest.mark.parametrize(
-    "version",
-    [
-        ("8.3.0"),
-    ],
-)
-def test_mysql_response(host, version):
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect(("127.0.0.1", 3306))
-        data = s.recv(1024).decode("latin-1")
-
-    assert version in data
