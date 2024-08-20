@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+
+# Allow data dir access
+{{ mysql_datadir }}/ r,
+{{ mysql_datadir }}/** rwk,
+
+# Allow log file access
+{{ mysql_logdir }}/ r,
+{{ mysql_logdir }}/** rw,
+
+# Allow tmp file access
+{{ mysql_tmpdir }}/ r,
+{{ mysql_tmpdir }}/** rw,

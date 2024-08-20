@@ -1,0 +1,32 @@
+---
+- name: Setup replication
+  when:
+    - mysql_replication_role == 'slave'
+    - mysql_replication_master_host != ''
+  block:
+    - name: Check slave replication status
+      community.mysql.mysql_replication:
+        config_file: /root/.my.cnf
+        mode: getreplica
+      ignore_errors: true
+      register: mysql_slave_status
+
+    - name: Configure replication on the slave
+      community.mysql.mysql_replication:
+        config_file: /root/.my.cnf
+        master_host: "{{ mysql_replication_master_host }}"
+        master_password: repl
+        master_user: repl
+        mode: changeprimary
+        primary_auto_position: true
+      when:
+        - (mysql_slave_status.Is_Replica is defined and not mysql_slave_status.Is_Replica)
+          or (mysql_slave_status.Is_Replica is not defined and mysql_slave_status is failed)
+
+    - name: Start replication
+      community.mysql.mysql_replication:
+        config_file: /root/.my.cnf
+        mode: startreplica
+      when:
+        - (mysql_slave_status.Is_Replica is defined and not mysql_slave_status.Is_Replica)
+          or (mysql_slave_status.Is_Replica is not defined and mysql_slave_status is failed)

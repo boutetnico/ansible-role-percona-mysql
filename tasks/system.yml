@@ -1,0 +1,76 @@
+---
+- name: Ensure mysql group exists
+  ansible.builtin.group:
+    name: "{{ mysql_group }}"
+    state: present
+
+- name: Ensure mysql user exists
+  ansible.builtin.user:
+    createhome: false
+    group: "{{ mysql_group }}"
+    name: "{{ mysql_user }}"
+    state: present
+
+- name: Ensure required directories exist
+  ansible.builtin.file:
+    group: "{{ mysql_group }}"
+    mode: "0754"
+    owner: "{{ mysql_user }}"
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "{{ mysql_datadir }}"
+    - "{{ mysql_tmpdir }}"
+    - "{{ mysql_logdir }}"
+
+- name: Include tasks to setup percona MySQL
+  ansible.builtin.import_tasks: setup.yml
+
+- name: Ensure systemd mysql directory exists
+  ansible.builtin.file:
+    group: root
+    mode: "0755"
+    owner: root
+    path: /etc/systemd/system/mysql.service.d
+    state: directory
+
+- name: Ensure systemd override configuration is installed
+  ansible.builtin.template:
+    dest: /etc/systemd/system/mysql.service.d/override.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: etc/systemd/system/mysql.service.d/systemd_override.conf.j2
+  notify: Reload systemd daemon
+
+- name: Ensure systemd daemon is reloaded now if needed
+  ansible.builtin.meta: "flush_handlers"
+
+- name: Ensure MySQL is running and starts on boot
+  ansible.builtin.service:
+    enabled: true
+    name: mysql
+    state: started
+
+- name: Set MySQL root password
+  community.mysql.mysql_user:
+    config_file: "/root/.my.cnf"
+    host_all: true
+    login_unix_socket: /run/mysqld/mysqld.sock
+    name: root
+    password: "{{ mysql_root_password }}"
+    priv: "*.*:ALL,GRANT"
+
+- name: Copy root .my.cnf with root password
+  ansible.builtin.template:
+    dest: "/root/.my.cnf"
+    mode: "0600"
+    src: root/.my.cnf.j2
+
+- name: Setup logrotate script
+  ansible.builtin.template:
+    dest: /etc/logrotate.d/mysql
+    group: root
+    mode: "0644"
+    owner: root
+    src: etc/logrotate.d/mysql.j2

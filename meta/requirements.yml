@@ -1,0 +1,3 @@
+---
+- src: https://github.com/boutetnico/ansible-role-percona-release.git
+  name: boutetnico.percona_release

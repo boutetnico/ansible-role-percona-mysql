@@ -1,0 +1,26 @@
+---
+galaxy_info:
+  role_name: percona_mysql
+  namespace: boutetnico
+  author: Nicolas Boutet
+  description: Install and configure Percona Server for MySQL.
+  license: MIT
+  min_ansible_version: "2.10"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+        - noble
+    - name: Debian
+      versions:
+        - bookworm
+        - bullseye
+  galaxy_tags:
+    - percona
+    - mysql
+    - server
+dependencies:
+  - role: boutetnico.percona_release
+    vars:
+      percona_release_repositories:
+        - ps-8x-innovation

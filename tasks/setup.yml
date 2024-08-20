@@ -1,0 +1,79 @@
+---
+- name: Ensure Percona Server for MySQL is installed
+  ansible.builtin.apt:
+    name: "{{ mysql_packages + mysql_extra_packages }}"
+    state: "{{ mysql_packages_state }}"
+  register: percona_mysql_installed
+  environment:
+    PERCONA_TELEMETRY_DISABLE: "1"
+
+- name: Ensure MySQL did not start before it is configured  # noqa no-handler
+  ansible.builtin.service:
+    name: mysql
+    state: stopped
+  when: percona_mysql_installed is changed
+
+- name: Setup my.cnf
+  ansible.builtin.template:
+    dest: /etc/mysql/my.cnf
+    group: root
+    mode: "0644"
+    owner: root
+    src: etc/mysql/my.cnf.j2
+  register: percona_mysql_my_cnf_updated
+
+- name: Check MySQL data dir content
+  ansible.builtin.find:
+    paths: "{{ mysql_datadir }}"
+    file_type: file
+  register: percona_mysql_datadir_content
+
+- name: Initialize MySQL  # noqa no-handler
+  ansible.builtin.command: "/usr/sbin/mysqld --defaults-file=/etc/mysql/my.cnf --initialize-insecure --user={{ mysql_user }}"
+  changed_when: false
+  when:
+    - percona_mysql_installed is changed
+    - percona_mysql_datadir_content.matched == 0
+
+- name: Check if AppArmor is enabled
+  ansible.builtin.command: apparmor_status
+  register: apparmor_status_output
+  changed_when: false
+  ignore_errors: true
+  no_log: true
+
+- name: Configure AppArmor for MySQL
+  when: "'AppArmor module is loaded.' in apparmor_status_output.stdout"
+  block:
+    - name: Setup mysqld AppArmor profile
+      ansible.builtin.template:
+        dest: /etc/apparmor.d/local/usr.sbin.mysqld
+        group: root
+        mode: "0644"
+        owner: root
+        src: etc/apparmor.d/local/usr.sbin.mysqld.j2
+      register: percona_mysql_apparmor_profile_updated
+
+    - name: Reload mysqld AppArmor profile  # noqa no-handler
+      ansible.builtin.command: apparmor_parser -r -T /etc/apparmor.d/usr.sbin.mysqld
+      changed_when: false
+      when: percona_mysql_apparmor_profile_updated is changed
+
+- name: Restart MySQL  # noqa no-handler
+  ansible.builtin.service:
+    name: mysql
+    state: restarted
+  when: percona_mysql_my_cnf_updated is changed
+
+- name: Ensure python packages are installed
+  ansible.builtin.pip:
+    name: "{{ mysql_pip_packages }}"
+    state: present
+    extra_args: --break-system-packages
+  when: ansible_distribution_release in ['bookworm', 'noble']
+
+- name: Ensure python packages are installed
+  ansible.builtin.pip:
+    name: "{{ mysql_pip_packages }}"
+    state: present
+  when: not ansible_distribution_release in ['bookworm', 'noble']

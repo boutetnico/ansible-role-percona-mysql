@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+
+{% for section, config in mysql_systemd_override.items() %}
+[{{ section }}]
+{%   for key, value in config.items() %}
+{{ key }}={{ value }}
+{%   endfor %}
+{% endfor %}

@@ -1,0 +1,73 @@
+[mysqld]
+
+datadir = {{ mysql_datadir }}
+tmpdir = {{ mysql_tmpdir }}
+
+sql_mode = {{ mysql_sql_mode }}
+
+character-set-server = {{ mysql_charset }}
+collation-server = {{ mysql_collation }}
+
+performance_schema = {{ mysql_performance_schema }}
+
+# Replication settings
+server-id = {{ mysql_server_id }}
+{% if mysql_replication_role == '' %}
+# replication is disabled
+{% else %}
+# replication is enabled
+gtid_mode=ON
+enforce-gtid-consistency=ON
+
+{%   if mysql_replication_role == 'master' %}
+# This is the master
+
+{%   elif mysql_replication_role == 'slave' %}
+# This is a slave
+relay_log_recovery = {{ mysql_relay_log_recovery }}
+relay_log = {{ ansible_hostname }}-relay-bin
+relay_log_index = {{ ansible_hostname }}-relay-bin.index
+{%   endif %}
+{% endif %}
+
+# Binary logging
+{% if mysql_enable_bin_logs %}
+sync_binlog = 1
+log_bin = {{ mysql_logdir }}/mysql-bin.log
+{%   for dbname in mysql_binlog_do_db %}
+binlog_do_db  = {{ dbname }}
+{%   endfor %}
+binlog_expire_logs_seconds = {{ mysql_binlog_expire_logs_seconds }}
+{% else %}
+skip-log-bin
+{% endif %}
+
+# InnoDB settings
+innodb_buffer_pool_size = {{ mysql_innodb_buffer_pool_size }}
+innodb_flush_log_at_trx_commit = {{ mysql_innodb_flush_log_at_trx_commit }}
+innodb_flush_method = {{ mysql_innodb_flush_method }}
+innodb_io_capacity = {{ mysql_innodb_io_capacity }}
+innodb_print_all_deadlocks = {{ mysql_innodb_print_all_deadlocks }}
+innodb_read_io_threads = {{ mysql_innodb_read_io_threads }}
+innodb_write_io_threads = {{ mysql_innodb_write_io_threads }}
+
+# Limits
+max_allowed_packet = {{ mysql_max_allowed_packet }}
+max_connections = {{ mysql_max_connections }}
+open_files_limit = {{ mysql_open_files_limit }}
+table_open_cache = {{ mysql_table_open_cache }}
+
+# Logging
+log_queries_not_using_indexes = {{ mysql_log_queries_not_using_indexes }}
+long_query_time = {{ mysql_long_query_time }}
+slow_query_log = {{ mysql_slow_query_log }}
+slow_query_log_file = {{ mysql_slow_query_log_file }}
+log_output = {{ mysql_log_output }}
+log_error = {{ mysql_log_error }}
+log_error_suppression_list = {{ mysql_log_error_suppression_list | join(',') }}
+
+# SSL
+tls_version = {{ mysql_tls_version }}
+
+# X plugin
+mysqlx = {{ mysql_x_plugin }}

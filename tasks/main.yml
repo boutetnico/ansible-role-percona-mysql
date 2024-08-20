@@ -1,0 +1,9 @@
+---
+- name: Setup MySQL
+  ansible.builtin.import_tasks: system.yml
+
+- name: Configure MySQL
+  ansible.builtin.import_tasks: app.yml
+
+- name: Setup replication
+  ansible.builtin.import_tasks: replication.yml
