@@ -62,7 +62,7 @@ Role Variables
 | mysql_table_open_cache               | true     | `4000`               | int       |                                                   |
 | mysql_log_queries_not_using_indexes  | true     | `0`                  | int       |                                                   |
 | mysql_long_query_time                | true     | `10`                 | int       |                                                   |
-| mysql_slow_query_log                 | true     | `0`                  | int       |                                                   |
+| mysql_slow_query_log                 | true     | `OFF`                | string    |                                                   |
 | mysql_slow_query_log_file            | true     |                      | string    | See `defaults/main.yml`.                          |
 | mysql_log_output                     | true     | `FILE`               | string    |                                                   |
 | mysql_log_error                      | true     |                      | string    | See `defaults/main.yml`.                          |
