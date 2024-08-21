@@ -64,6 +64,11 @@ mysql_log_error: "{{ mysql_logdir }}/mysql_error.log"
 mysql_log_error_suppression_list: []
 mysql_log_slow_admin_statements: "OFF"
 mysql_log_slow_slave_statements: "OFF"
+mysql_log_slow_rate_type: "session"
+mysql_log_slow_rate_limit: 1
+mysql_slow_query_log_always_write_time: 10
+mysql_log_slow_verbosity: ''
+mysql_slow_query_log_use_global_control: "none"
 
 mysql_tls_version: ''
 

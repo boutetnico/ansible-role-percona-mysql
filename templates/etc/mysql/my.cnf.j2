@@ -67,6 +67,11 @@ log_error = {{ mysql_log_error }}
 log_error_suppression_list = {{ mysql_log_error_suppression_list | join(',') }}
 log_slow_admin_statements = {{ mysql_log_slow_admin_statements }}
 log_slow_slave_statements = {{ mysql_log_slow_slave_statements }}
+log_slow_rate_type = {{ mysql_log_slow_rate_type }}
+log_slow_rate_limit = {{ mysql_log_slow_rate_limit }}
+slow_query_log_always_write_time = {{ mysql_slow_query_log_always_write_time }}
+log_slow_verbosity = {{ mysql_log_slow_verbosity }}
+slow_query_log_use_global_control = {{ mysql_slow_query_log_use_global_control }}
 
 # SSL
 tls_version = {{ mysql_tls_version }}
