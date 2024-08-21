@@ -62,6 +62,8 @@ mysql_slow_query_log_file: "{{ mysql_logdir }}/mysql_slow.log"
 mysql_log_output: "FILE"
 mysql_log_error: "{{ mysql_logdir }}/mysql_error.log"
 mysql_log_error_suppression_list: []
+mysql_log_slow_admin_statements: "OFF"
+mysql_log_slow_slave_statements: "OFF"
 
 mysql_tls_version: ''
 
