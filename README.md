@@ -73,7 +73,7 @@ Role Variables
 | mysql_log_slow_rate_limit               | true     | `1`                  | int       |                                                   |
 | mysql_slow_query_log_always_write_time  | true     | `10`                 | int       |                                                   |
 | mysql_log_slow_verbosity                | true     | `''`                 | string    |                                                   |
-| mysql_slow_query_log_use_global_control | true     | `none`               | string    |                                                   |
+| mysql_slow_query_log_use_global_control | true     | `''`                 | string    |                                                   |
 | mysql_tls_version                       | true     | `''`                 | string    |                                                   |
 | mysql_x_plugin                          | true     | `ON`                 | string    |                                                   |
 | mysql_systemd_override                  | true     | `{}`                 | dict      |                                                   |
