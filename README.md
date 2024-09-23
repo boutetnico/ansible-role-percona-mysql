@@ -68,7 +68,7 @@ Role Variables
 | mysql_log_error                         | true     |                      | string    | See `defaults/main.yml`.                          |
 | mysql_log_error_suppression_list        | true     | `[]`                 | list      |                                                   |
 | mysql_log_slow_admin_statements         | true     | `OFF`                | string    |                                                   |
-| mysql_log_slow_slave_statements         | true     | `OFF`                | string    |                                                   |
+| mysql_log_slow_replica_statements       | true     | `OFF`                | string    |                                                   |
 | mysql_log_slow_rate_type                | true     | `session`            | string    |                                                   |
 | mysql_log_slow_rate_limit               | true     | `1`                  | int       |                                                   |
 | mysql_slow_query_log_always_write_time  | true     | `10`                 | int       |                                                   |
