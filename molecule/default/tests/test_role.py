@@ -49,6 +49,6 @@ def test_convert_tz_query(host):
 
 def test_time_zone_name_rows(host):
     query = "SELECT * FROM mysql.time_zone_name;"
-    result = host.run(f'mysql -e "{query}""')
+    result = host.run(f'mysql -e "{query}"')
     rows = result.stdout.strip().split("\n")
     assert len(rows) > 1, "time_zone_name table has no rows"
