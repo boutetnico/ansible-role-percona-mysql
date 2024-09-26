@@ -2,11 +2,14 @@
 - name: Setup MySQL named time zones
   when: mysql_load_tz_tables
   block:
-    - name: Ensure tzdata package is present
+    - name: Ensure several packages are present
       ansible.builtin.apt:
-        name: tzdata
+        name: "{{ item }}"
         state: present
         update_cache: true
+      loop:
+        - cron
+        - tzdata
 
     - name: Setup named time zones
       ansible.builtin.shell:
