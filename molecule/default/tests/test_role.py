@@ -4,7 +4,7 @@ import pymysql
 
 def get_mysql_connection():
     connection = pymysql.connect(
-        host="localhost",
+        host="127.0.0.1",
         user="root",
         password="root",
         db="mysql",
