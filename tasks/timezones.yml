@@ -1,5 +1,13 @@
 ---
-- name: Setup named time zones
-  ansible.builtin.command: /usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql
-  changed_when: false
+- name: Setup MySQL named time zones
   when: mysql_load_tz_tables
+  block:
+    - name: Ensure tzdata package is present
+      ansible.builtin.apt:
+        name: tzdata
+        state: present
+        update_cache: true
+
+    - name: Setup named time zones
+      ansible.builtin.command: /usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql
+      changed_when: false
