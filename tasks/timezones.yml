@@ -9,5 +9,7 @@
         update_cache: true
 
     - name: Setup named time zones
-      ansible.builtin.shell: set -o pipefail && /usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql
+      ansible.builtin.shell:
+        cmd: set -o pipefail && /usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql
+        executable: /bin/bash
       changed_when: false
