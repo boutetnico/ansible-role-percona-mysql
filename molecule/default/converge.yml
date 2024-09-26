@@ -4,3 +4,5 @@
 
   roles:
     - role: boutetnico.percona_mysql
+
+      mysql_load_tz_tables: true

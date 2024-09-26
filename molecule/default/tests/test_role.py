@@ -1,5 +1,17 @@
 import pytest
-import socket
+import pymysql
+
+
+def get_mysql_connection():
+    connection = pymysql.connect(
+        host="localhost",
+        user="root",
+        password="password",
+        db="mysql",
+        charset="utf8mb4",
+        cursorclass=pymysql.cursors.DictCursor,
+    )
+    return connection
 
 
 @pytest.mark.parametrize(
@@ -40,3 +52,27 @@ def test_service_is_running_and_enabled(host, name):
     service = host.service(name)
     assert service.is_enabled
     assert service.is_running
+
+
+def test_convert_tz_query():
+    connection = get_mysql_connection()
+    try:
+        with connection.cursor() as cursor:
+            query = "SELECT CONVERT_TZ('2004-01-01 12:00:00','GMT','MET');"
+            cursor.execute(query)
+            result = cursor.fetchone()
+            assert result is not None, "CONVERT_TZ query returned NULL"
+    finally:
+        connection.close()
+
+
+def test_time_zone_name_rows():
+    connection = get_mysql_connection()
+    try:
+        with connection.cursor() as cursor:
+            query = "SELECT * FROM mysql.time_zone_name;"
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            assert len(rows) > 0, "time_zone_name table has no rows"
+    finally:
+        connection.close()
