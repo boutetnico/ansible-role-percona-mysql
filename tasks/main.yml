@@ -7,3 +7,6 @@
 
 - name: Setup replication
   ansible.builtin.import_tasks: replication.yml
+
+- name: Setup named time zones
+  ansible.builtin.import_tasks: timezones.yml

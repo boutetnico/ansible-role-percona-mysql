@@ -1,0 +1,26 @@
+---
+- name: Setup MySQL named time zones
+  when: mysql_load_tz_tables
+  block:
+    - name: Ensure several packages are present
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: true
+      loop:
+        - cron
+        - tzdata
+
+    - name: Setup named time zones
+      ansible.builtin.shell:
+        cmd: set -o pipefail && /usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo | /usr/bin/mysql mysql
+        executable: /bin/bash
+      changed_when: false
+
+    - name: Install cron jobs to keep named time zones updated
+      ansible.builtin.cron:
+        job: "/usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo 2> /dev/null | /usr/bin/mysql mysql"
+        name: "Update MySQL named time zones"
+        special_time: "weekly"
+        state: present
+        user: "root"

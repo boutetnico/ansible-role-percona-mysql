@@ -1,5 +1,4 @@
 import pytest
-import socket
 
 
 @pytest.mark.parametrize(
@@ -40,3 +39,30 @@ def test_service_is_running_and_enabled(host, name):
     service = host.service(name)
     assert service.is_enabled
     assert service.is_running
+
+
+def test_convert_tz_query(host):
+    query = "SELECT CONVERT_TZ('2004-01-01 12:00:00','GMT','MET');"
+    result = host.run(f'mysql -e "{query}"')
+    assert result.stdout.strip() != "NULL", "CONVERT_TZ query returned NULL"
+
+
+def test_time_zone_name_rows(host):
+    query = "SELECT * FROM mysql.time_zone_name;"
+    result = host.run(f'mysql -e "{query}"')
+    rows = result.stdout.strip().split("\n")
+    assert len(rows) > 1, "time_zone_name table has no rows"
+
+
+@pytest.mark.parametrize(
+    "job,user",
+    [
+        (
+            "@weekly /usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo 2> /dev/null | /usr/bin/mysql mysql",
+            "root",
+        ),
+    ],
+)
+def test_time_zone_update_cron_jobs_exist(host, job, user):
+    jobs = host.check_output(f"crontab -u {user} -l")
+    assert job in jobs
