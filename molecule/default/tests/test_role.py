@@ -52,3 +52,17 @@ def test_time_zone_name_rows(host):
     result = host.run(f'mysql -e "{query}"')
     rows = result.stdout.strip().split("\n")
     assert len(rows) > 1, "time_zone_name table has no rows"
+
+
+@pytest.mark.parametrize(
+    "job,user",
+    [
+        (
+            "@weekly /usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo 2> /dev/null | /usr/bin/mysql mysql",
+            "root",
+        ),
+    ],
+)
+def test_time_zone_update_cron_jobs_exist(host, job, user):
+    jobs = host.check_output(f"crontab -u {user} -l")
+    assert job in jobs

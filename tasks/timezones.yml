@@ -10,6 +10,14 @@
 
     - name: Setup named time zones
       ansible.builtin.shell:
-        cmd: set -o pipefail && /usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql
+        cmd: set -o pipefail && /usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo | /usr/bin/mysql mysql
         executable: /bin/bash
       changed_when: false
+
+    - name: Install cron jobs to keep named time zones updated
+      ansible.builtin.cron:
+        job: "/usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo 2> /dev/null | /usr/bin/mysql mysql"
+        name: "Update MySQL named time zones"
+        special_time: "weekly"
+        state: present
+        user: "root"
