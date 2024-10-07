@@ -19,9 +19,12 @@ mysql_group: "mysql"
 
 mysql_root_password: "root"
 
+mysql_installdir: "/usr/sbin"
 mysql_datadir: "/var/lib/mysql"
 mysql_tmpdir: "/tmp/mysql"
 mysql_logdir: "/var/log/mysql"
+mysql_plugindir: "/usr/lib/mysql/plugin"
+mysql_keyringdir: "/var/lib/mysql-keyring"
 
 mysql_sql_mode: ''
 mysql_charset: "utf8mb4"
