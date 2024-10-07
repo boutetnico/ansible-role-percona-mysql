@@ -11,3 +11,6 @@
 # Allow tmp file access
 {{ mysql_tmpdir }}/ r,
 {{ mysql_tmpdir }}/** rw,
+
+# Allow MySQL access to the global manifest file
+{{ mysql_installdir }}/mysqld.my r,

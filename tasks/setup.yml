@@ -29,7 +29,7 @@
   register: percona_mysql_datadir_content
 
 - name: Initialize MySQL  # noqa no-handler
-  ansible.builtin.command: "/usr/sbin/mysqld --defaults-file=/etc/mysql/my.cnf --initialize-insecure --user={{ mysql_user }}"
+  ansible.builtin.command: "{{ mysql_installdir }}/mysqld --defaults-file=/etc/mysql/my.cnf --initialize-insecure --user={{ mysql_user }}"
   changed_when: false
   when:
     - percona_mysql_installed is changed
@@ -58,6 +58,9 @@
       ansible.builtin.command: apparmor_parser -r -T /etc/apparmor.d/usr.sbin.mysqld
       changed_when: false
       when: percona_mysql_apparmor_profile_updated is changed
+
+- name: Setup keyring
+  ansible.builtin.import_tasks: keyring.yml
 
 - name: Restart MySQL  # noqa no-handler
   ansible.builtin.service:

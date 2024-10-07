@@ -22,6 +22,7 @@
     - "{{ mysql_datadir }}"
     - "{{ mysql_tmpdir }}"
     - "{{ mysql_logdir }}"
+    - "{{ mysql_keyringdir }}"
 
 - name: Include tasks to setup percona MySQL
   ansible.builtin.import_tasks: setup.yml

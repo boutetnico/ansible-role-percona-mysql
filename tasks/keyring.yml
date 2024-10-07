@@ -1,0 +1,18 @@
+---
+- name: Setup mysqld manifest file
+  ansible.builtin.template:
+    dest: "{{ mysql_installdir }}/mysqld.my"
+    group: root
+    mode: "0644"
+    owner: root
+    src: usr/sbin/mysqld.my.j2
+  notify: Restart mysql
+
+- name: Setup configuration of keyring component file
+  ansible.builtin.template:
+    dest: "{{ mysql_plugindir }}/component_keyring_file.cnf"
+    group: root
+    mode: "0644"
+    owner: root
+    src: usr/lib/mysql/plugin/component_keyring_file.cnf.j2
+  notify: Restart mysql
