@@ -70,16 +70,18 @@ def test_time_zone_update_cron_jobs_exist(host, job, user):
 
 def test_encrypted_table_creation(host):
     # Create an encrypted table
-    create_table_query = "CREATE TABLE t1 (c1 INT) ENCRYPTION = 'Y';"
+    create_table_query = "CREATE TABLE mysql.test_encryption (c1 INT) ENCRYPTION = 'Y';"
     create_result = host.run(f'mysql -e "{create_table_query}"')
-    assert create_result.rc == 0, "Failed to create encrypted table t1"
+    assert create_result.rc == 0, "Failed to create encrypted table test_encryption"
 
     # Check if the table exists and is encrypted
     check_encryption_query = """
     SELECT SPACE, NAME, SPACE_TYPE, ENCRYPTION
     FROM INFORMATION_SCHEMA.INNODB_TABLESPACES
-    WHERE NAME = 'mysql/t1' AND ENCRYPTION = 'Y';
+    WHERE NAME = 'mysql/test_encryption' AND ENCRYPTION = 'Y';
     """
     check_result = host.run(f'mysql -e "{check_encryption_query}"')
     rows = check_result.stdout.strip().split("\n")
-    assert len(rows) > 1, "Encrypted table t1 does not exist or is not encrypted"
+    assert (
+        len(rows) > 1
+    ), "Encrypted table test_encryption does not exist or is not encrypted"
