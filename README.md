@@ -40,7 +40,7 @@ Role Variables
 | mysql_sql_mode                          | true     | `''`                     | string    |                                       |
 | mysql_charset                           | true     | `utf8mb4`                | string    |                                       |
 | mysql_collation                         | true     | `utf8mb4_general_ci`     | string    |                                       |
-| mysql_performance_schema                | true     | `0`                      | int       |                                       |
+| mysql_performance_schema                | true     | `1`                      | int       |                                       |
 | mysql_server_id                         | true     | `1`                      | int       |                                       |
 | mysql_replication_role                  | true     | `''`                     | string    | `master`, `slave` or `''`             |
 | mysql_replication_master_host           | true     | `''`                     | string    |                                       |

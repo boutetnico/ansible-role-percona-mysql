@@ -30,7 +30,7 @@ mysql_sql_mode: ''
 mysql_charset: "utf8mb4"
 mysql_collation: "utf8mb4_general_ci"
 
-mysql_performance_schema: 0
+mysql_performance_schema: 1
 
 mysql_server_id: 1
 mysql_replication_role: ''  # '', master or slave
