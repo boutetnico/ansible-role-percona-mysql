@@ -14,3 +14,7 @@
 
 # Allow MySQL access to the global manifest file
 {{ mysql_installdir }}/mysqld.my r,
+
+# Allow keyring dir access
+{{ mysql_keyringdir }}/ r,
+{{ mysql_keyringdir }}/** rwk,

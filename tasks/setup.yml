@@ -36,14 +36,14 @@
     - percona_mysql_datadir_content.matched == 0
 
 - name: Check if AppArmor is enabled
-  ansible.builtin.command: apparmor_status
-  register: apparmor_status_output
+  ansible.builtin.command: aa-status --enabled
+  register: apparmor_is_enabled
   changed_when: false
   ignore_errors: true
   no_log: true
 
 - name: Configure AppArmor for MySQL
-  when: "'AppArmor module is loaded.' in apparmor_status_output.stdout"
+  when: apparmor_is_enabled.rc == 0
   block:
     - name: Setup mysqld AppArmor profile
       ansible.builtin.template:
