@@ -9,10 +9,11 @@
 
       mysql_users:
         - name: test_sha2
-          priv: "*.*:SELECT"
           plugin_auth_string: test_sha2
+          priv: "*.*:SELECT"
           salt: a90ae3fcf94db9f7538e
 
         - name: test_native
-          priv: "*.*:ALL"
           password: test_native
+          plugin: mysql_native_password
+          priv: "*.*:ALL"
