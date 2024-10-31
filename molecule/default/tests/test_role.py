@@ -86,7 +86,7 @@ def test_encrypted_table_creation(host):
 
 
 @pytest.mark.parametrize(
-    "username,host,expected_plugin",
+    "username,expected_plugin",
     [
         ("test_sha2", "caching_sha2_password"),
         ("test_native", "mysql_native_password"),
