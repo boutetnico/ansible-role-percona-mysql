@@ -20,10 +20,14 @@
 - name: Ensure users exists
   community.mysql.mysql_user:
     config_file: "/root/.my.cnf"
-    host: "{{ item.host }}"
+    host: "{{ item.host | d(omit) }}"
     name: "{{ item.name }}"
-    password: "{{ item.password }}"
+    password: "{{ item.password | d(omit) }}"
+    plugin_auth_string: "{{ item.plugin_auth_string | d(omit) }}"
+    plugin_hash_string: "{{ item.plugin_hash_string | d(omit) }}"
+    plugin: "{{ item.plugin | d(mysql_default_authentication_plugin) }}"
     priv: "{{ item.priv }}"
+    salt: "{{ item.salt | d(omit) }}"
   loop: "{{ mysql_users }}"
   loop_control:
     label: "{{ item.name }}"
@@ -31,9 +35,12 @@
 - name: Ensure users that should be removed are absent
   community.mysql.mysql_user:
     config_file: "/root/.my.cnf"
-    host: "{{ item.host }}"
+    host: "{{ item.host | d(omit) }}"
     name: "{{ item.name }}"
-    password: "{{ item.password }}"
+    password: "{{ item.password | d(omit) }}"
+    plugin_auth_string: "{{ item.plugin_auth_string | d(omit) }}"
+    plugin_hash_string: "{{ item.plugin_hash_string | d(omit) }}"
+    plugin: "{{ item.plugin | d(omit) }}"
     state: absent
   loop: "{{ mysql_remove_users }}"
   loop_control:

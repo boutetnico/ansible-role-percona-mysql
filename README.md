@@ -30,7 +30,6 @@ Role Variables
 | mysql_pip_packages                      | true     |                          | list      | See `defaults/main.yml`.              |
 | mysql_user                              | true     | `mysql`                  | string    |                                       |
 | mysql_group                             | true     | `mysql`                  | string    |                                       |
-| mysql_root_password                     | true     | `root`                   | string    |                                       |
 | mysql_installdir                        | true     | `/usr/sbin`              | string    |                                       |
 | mysql_datadir                           | true     | `/var/lib/mysql`         | string    |                                       |
 | mysql_tmpdir                            | true     | `/tmp/mysql`             | string    |                                       |
@@ -41,6 +40,13 @@ Role Variables
 | mysql_charset                           | true     | `utf8mb4`                | string    |                                       |
 | mysql_collation                         | true     | `utf8mb4_general_ci`     | string    |                                       |
 | mysql_performance_schema                | true     | `1`                      | int       |                                       |
+| mysql_default_authentication_plugin     | true     | `caching_sha2_password`  | string    |                                       |
+| mysql_authentication_policy             | true     | `*,,`                    | string    |                                       |
+| mysql_root_user                         | true     | `root`                   | string    |                                       |
+| mysql_root_authentication_plugin        | true     |                          | string    | See `defaults/main.yml`.              |
+| mysql_root_password                     | true     | `root`                   | string    |                                       |
+| mysql_root_salt                         | true     | `1234567890abcdefghij`   | string    |                                       |
+| mysql_root_privileges                   | true     | `*.*:ALL,GRANT`          | string    |                                       |
 | mysql_server_id                         | true     | `1`                      | int       |                                       |
 | mysql_replication_role                  | true     | `''`                     | string    | `master`, `slave` or `''`             |
 | mysql_replication_master_host           | true     | `''`                     | string    |                                       |

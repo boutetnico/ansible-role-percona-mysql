@@ -83,3 +83,19 @@ def test_encrypted_table_creation(host):
     assert (
         len(rows) > 1
     ), "Encrypted table test_encryption does not exist or is not encrypted"
+
+
+@pytest.mark.parametrize(
+    "username,expected_plugin",
+    [
+        ("test_sha2", "caching_sha2_password"),
+        ("test_native", "mysql_native_password"),
+    ],
+)
+def test_mysql_users_created_with_correct_auth_plugin(host, username, expected_plugin):
+    query = f"SELECT plugin FROM mysql.user WHERE user = '{username}';"
+    result = host.run(f'mysql -e "{query}"')
+    plugin = result.stdout.strip().split("\n")[-1]
+    assert (
+        plugin == expected_plugin
+    ), f"User {username}@{host} has incorrect plugin {plugin}, expected {expected_plugin}"

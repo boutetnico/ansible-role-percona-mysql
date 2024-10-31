@@ -10,6 +10,10 @@ collation-server = {{ mysql_collation }}
 
 performance_schema = {{ mysql_performance_schema }}
 
+# Authentication
+default_authentication_plugin = {{ mysql_default_authentication_plugin }}
+authentication_policy = {{ mysql_authentication_policy }}
+
 # Replication settings
 server-id = {{ mysql_server_id }}
 {% if mysql_replication_role == '' %}

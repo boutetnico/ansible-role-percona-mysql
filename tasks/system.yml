@@ -53,14 +53,27 @@
     name: mysql
     state: started
 
-- name: Set MySQL root password
+- name: Set MySQL root password (mysql_native_password)
   community.mysql.mysql_user:
     config_file: "/root/.my.cnf"
     host_all: true
     login_unix_socket: /run/mysqld/mysqld.sock
-    name: root
+    name: "{{ mysql_root_user }}"
     password: "{{ mysql_root_password }}"
-    priv: "*.*:ALL,GRANT"
+    priv: "{{ mysql_root_privileges }}"
+  when: mysql_root_authentication_plugin == 'mysql_native_password'
+
+- name: Set MySQL root password (caching_sha2_password)
+  community.mysql.mysql_user:
+    config_file: "/root/.my.cnf"
+    host_all: true
+    login_unix_socket: /run/mysqld/mysqld.sock
+    name: "{{ mysql_root_user }}"
+    plugin_auth_string: "{{ mysql_root_password }}"
+    plugin: "{{ mysql_root_authentication_plugin }}"
+    priv: "{{ mysql_root_privileges }}"
+    salt: "{{ mysql_root_salt }}"
+  when: mysql_root_authentication_plugin == 'caching_sha2_password'
 
 - name: Copy root .my.cnf with root password
   ansible.builtin.template:
