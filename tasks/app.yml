@@ -20,7 +20,7 @@
 - name: Ensure users exists
   community.mysql.mysql_user:
     config_file: "/root/.my.cnf"
-    host: "{{ item.host }}"
+    host: "{{ item.host | d(omit) }}"
     name: "{{ item.name }}"
     password: "{{ item.password | d(omit) }}"
     plugin_auth_string: "{{ item.plugin_auth_string | d(omit) }}"
@@ -35,7 +35,7 @@
 - name: Ensure users that should be removed are absent
   community.mysql.mysql_user:
     config_file: "/root/.my.cnf"
-    host: "{{ item.host }}"
+    host: "{{ item.host | d(omit) }}"
     name: "{{ item.name }}"
     password: "{{ item.password | d(omit) }}"
     plugin_auth_string: "{{ item.plugin_auth_string | d(omit) }}"
