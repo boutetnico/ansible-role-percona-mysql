@@ -23,6 +23,11 @@
         - (mysql_slave_status.Is_Replica is defined and not mysql_slave_status.Is_Replica)
           or (mysql_slave_status.Is_Replica is not defined and mysql_slave_status is failed)
 
+    - name: Configure replication options on the slave
+      ansible.builtin.command: /usr/bin/mysql -e "CHANGE MASTER TO {{ item.key }}={{ item.value }};"
+      loop: "{{ mysql_replication_options | dict2items }}"
+      changed_when: false
+
     - name: Start replication
       community.mysql.mysql_replication:
         config_file: /root/.my.cnf
