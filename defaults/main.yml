@@ -43,6 +43,8 @@ mysql_root_privileges: "*.*:ALL,GRANT"
 mysql_server_id: 1
 mysql_replication_role: ''  # '', master or slave
 mysql_replication_master_host: ''
+mysql_replication_master_user: repl
+mysql_replication_master_password: repl
 mysql_replication_options: {}
 mysql_relay_log_recovery: 0
 mysql_binlog_do_db: []

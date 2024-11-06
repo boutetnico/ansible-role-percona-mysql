@@ -50,6 +50,8 @@ Role Variables
 | mysql_server_id                         | true     | `1`                      | int       |                                       |
 | mysql_replication_role                  | true     | `''`                     | string    | `master`, `slave` or `''`             |
 | mysql_replication_master_host           | true     | `''`                     | string    |                                       |
+| mysql_replication_master_user           | true     | `repl`                   | string    |                                       |
+| mysql_replication_master_password       | true     | `repl`                   | string    |                                       |
 | mysql_replication_options               | true     | `{}`                     | dict      |                                       |
 | mysql_relay_log_recovery                | true     | `0`                      | int       |                                       |
 | mysql_binlog_do_db                      | true     | `[]`                     | list      |                                       |

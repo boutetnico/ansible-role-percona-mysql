@@ -15,8 +15,8 @@
       community.mysql.mysql_replication:
         config_file: /root/.my.cnf
         master_host: "{{ mysql_replication_master_host }}"
-        master_password: repl
-        master_user: repl
+        master_password: "{{ mysql_replication_master_password }}"
+        master_user: "{{ mysql_replication_master_user }}"
         mode: changeprimary
         primary_auto_position: true
       when:
