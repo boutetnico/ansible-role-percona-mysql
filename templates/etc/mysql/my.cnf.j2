@@ -69,6 +69,7 @@ slow_query_log_file = {{ mysql_slow_query_log_file }}
 log_output = {{ mysql_log_output }}
 log_error = {{ mysql_log_error }}
 log_error_suppression_list = {{ mysql_log_error_suppression_list | join(',') }}
+log_error_verbosity = {{ mysql_log_error_verbosity }}
 log_slow_admin_statements = {{ mysql_log_slow_admin_statements }}
 log_slow_replica_statements = {{ mysql_log_slow_replica_statements }}
 log_slow_rate_type = {{ mysql_log_slow_rate_type }}

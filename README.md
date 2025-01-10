@@ -79,6 +79,7 @@ Role Variables
 | mysql_log_output                        | true     | `FILE`                   | string    |                                       |
 | mysql_log_error                         | true     |                          | string    | See `defaults/main.yml`.              |
 | mysql_log_error_suppression_list        | true     | `[]`                     | list      |                                       |
+| mysql_log_error_verbosity               | true     | `2`                      | int       |                                       |
 | mysql_log_slow_admin_statements         | true     | `OFF`                    | string    |                                       |
 | mysql_log_slow_replica_statements       | true     | `OFF`                    | string    |                                       |
 | mysql_log_slow_rate_type                | true     | `session`                | string    |                                       |
