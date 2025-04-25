@@ -47,6 +47,8 @@ mysql_replication_master_user: repl
 mysql_replication_master_password: repl
 mysql_replication_options: {}
 mysql_relay_log_recovery: 0
+mysql_read_only: "OFF"
+mysql_super_read_only: "OFF"
 mysql_binlog_do_db: []
 mysql_binlog_expire_logs_seconds: 2592000
 mysql_enable_bin_logs: true
