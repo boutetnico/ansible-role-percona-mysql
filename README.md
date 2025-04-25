@@ -54,6 +54,8 @@ Role Variables
 | mysql_replication_master_password       | true     | `repl`                   | string    |                                       |
 | mysql_replication_options               | true     | `{}`                     | dict      |                                       |
 | mysql_relay_log_recovery                | true     | `0`                      | int       |                                       |
+| mysql_read_only                         | true     | `OFF`                    | string    |                                       |
+| mysql_super_read_only                   | true     | `OFF`                    | string    |                                       |
 | mysql_binlog_do_db                      | true     | `[]`                     | list      |                                       |
 | mysql_binlog_expire_logs_seconds        | true     | `2592000`                | int       | Default to 30 days.                   |
 | mysql_enable_bin_logs                   | true     | `true`                   | boolean   |                                       |
