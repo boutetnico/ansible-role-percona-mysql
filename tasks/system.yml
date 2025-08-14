@@ -3,13 +3,15 @@
   ansible.builtin.group:
     name: "{{ mysql_group }}"
     state: present
+    system: true
 
 - name: Ensure mysql user exists
   ansible.builtin.user:
-    createhome: false
+    create_home: false
     group: "{{ mysql_group }}"
     name: "{{ mysql_user }}"
     state: present
+    system: true
 
 - name: Ensure required directories exist
   ansible.builtin.file:
