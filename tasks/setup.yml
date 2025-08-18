@@ -5,7 +5,14 @@
     state: "{{ mysql_packages_state }}"
   register: percona_mysql_installed
   environment:
-    PERCONA_TELEMETRY_DISABLE: "1"
+    PERCONA_TELEMETRY_DISABLE: "{{ mysql_disable_percona_telemetry | int }}"
+
+- name: Ensure Percona telemetry agent is not running and is disabled
+  ansible.builtin.service:
+    name: percona-telemetry-agent
+    state: stopped
+    enabled: false
+  when: mysql_disable_percona_telemetry
 
 - name: Ensure MySQL did not start before it is configured  # noqa no-handler
   ansible.builtin.service:

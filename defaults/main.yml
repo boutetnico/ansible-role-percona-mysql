@@ -96,3 +96,5 @@ mysql_x_plugin: "ON"
 mysql_systemd_override: {}
 
 mysql_load_tz_tables: false
+
+mysql_disable_percona_telemetry: true

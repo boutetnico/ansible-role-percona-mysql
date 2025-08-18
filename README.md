@@ -95,6 +95,7 @@ Role Variables
 | mysql_x_plugin                            | true     | `ON`                     | string    |                                       |
 | mysql_systemd_override                    | true     | `{}`                     | dict      |                                       |
 | mysql_load_tz_tables                      | true     | `false`                  | boolean   |                                       |
+| mysql_disable_percona_telemetry           | true     | `true`                   | boolean   | Privacy by default.                   |
 
 Dependencies
 ------------

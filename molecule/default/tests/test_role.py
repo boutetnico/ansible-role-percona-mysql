@@ -69,6 +69,7 @@ def test_time_zone_update_cron_jobs_exist(host, job, user):
 
 
 def test_encrypted_table_creation(host):
+    host.run("mysql -e 'DROP TABLE IF EXISTS mysql.test_encryption;'")
     create_table_query = "CREATE TABLE mysql.test_encryption (c1 INT) ENCRYPTION = 'Y';"
     create_result = host.run(f'mysql -e "{create_table_query}"')
     assert create_result.rc == 0, "Failed to create encrypted table test_encryption"
@@ -99,3 +100,15 @@ def test_mysql_users_created_with_correct_auth_plugin(host, username, expected_p
     assert (
         plugin == expected_plugin
     ), f"User {username}@{host} has incorrect plugin {plugin}, expected {expected_plugin}"
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        ("percona-telemetry-agent"),
+    ],
+)
+def test_telemetry_is_not_running_and_disabled(host, name):
+    service = host.service(name)
+    assert not service.is_enabled
+    assert not service.is_running
