@@ -1,6 +1,6 @@
 {{ mysql_logdir }}/*.log {
     missingok
-    create 660 mysql mysql
+    create 660 {{ mysql_user }} {{ mysql_group }}
     notifempty
     daily
     rotate 7
