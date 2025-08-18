@@ -11,8 +11,8 @@ collation-server = {{ mysql_collation }}
 performance_schema = {{ mysql_performance_schema }}
 
 # Authentication
-default_authentication_plugin = {{ mysql_default_authentication_plugin }}
 authentication_policy = {{ mysql_authentication_policy }}
+mysql_native_password = {{ mysql_mysql_native_password }}
 
 # Replication settings
 server-id = {{ mysql_server_id }}
@@ -54,6 +54,7 @@ innodb_buffer_pool_size = {{ mysql_innodb_buffer_pool_size }}
 innodb_flush_log_at_trx_commit = {{ mysql_innodb_flush_log_at_trx_commit }}
 innodb_flush_method = {{ mysql_innodb_flush_method }}
 innodb_io_capacity = {{ mysql_innodb_io_capacity }}
+innodb_numa_interleave = {{ mysql_innodb_numa_interleave }}
 innodb_print_all_deadlocks = {{ mysql_innodb_print_all_deadlocks }}
 innodb_read_io_threads = {{ mysql_innodb_read_io_threads }}
 innodb_write_io_threads = {{ mysql_innodb_write_io_threads }}

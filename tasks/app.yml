@@ -25,7 +25,7 @@
     password: "{{ item.password | d(omit) }}"
     plugin_auth_string: "{{ item.plugin_auth_string | d(omit) }}"
     plugin_hash_string: "{{ item.plugin_hash_string | d(omit) }}"
-    plugin: "{{ item.plugin | d(mysql_default_authentication_plugin) }}"
+    plugin: "{{ item.plugin | d(mysql_users_default_authentication_plugin) }}"
     priv: "{{ item.priv }}"
     salt: "{{ item.salt | d(omit) }}"
   loop: "{{ mysql_users }}"

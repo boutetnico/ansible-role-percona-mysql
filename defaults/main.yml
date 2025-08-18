@@ -1,10 +1,10 @@
 ---
-mysql_package_version: "8.3.0-1-1.{{ ansible_distribution_release }}"
+mysql_package_version: ""
 
 mysql_packages:
-  - "percona-server-client={{ mysql_package_version }}"
-  - "percona-server-common={{ mysql_package_version }}"
-  - "percona-server-server={{ mysql_package_version }}"
+  - "percona-server-client{{ mysql_package_version | string | trim | ternary('=' ~ mysql_package_version, '') }}"
+  - "percona-server-common{{ mysql_package_version | string | trim | ternary('=' ~ mysql_package_version, '') }}"
+  - "percona-server-server{{ mysql_package_version | string | trim | ternary('=' ~ mysql_package_version, '') }}"
 
 mysql_extra_packages:
   - "python3-pip"
@@ -31,11 +31,11 @@ mysql_collation: "utf8mb4_general_ci"
 
 mysql_performance_schema: 1
 
-mysql_default_authentication_plugin: "caching_sha2_password"  # mysql_native_password or caching_sha2_password
 mysql_authentication_policy: "*,,"
+mysql_mysql_native_password: "OFF"
 
 mysql_root_user: "root"
-mysql_root_authentication_plugin: "{{ mysql_default_authentication_plugin }}"
+mysql_root_authentication_plugin: "caching_sha2_password"
 mysql_root_password: "root"
 mysql_root_salt: "1234567890abcdefghij"
 mysql_root_privileges: "*.*:ALL,GRANT"
@@ -56,14 +56,16 @@ mysql_enable_bin_logs: true
 mysql_databases: []
 mysql_remove_databases: []
 mysql_users: []
+mysql_users_default_authentication_plugin: "caching_sha2_password"
 mysql_remove_users: []
 
 mysql_innodb_buffer_pool_size: "128M"
 mysql_innodb_flush_log_at_trx_commit: 1
 mysql_innodb_flush_method: "O_DIRECT"
-mysql_innodb_io_capacity: 200
+mysql_innodb_io_capacity: 10000
+mysql_innodb_numa_interleave: "ON"
 mysql_innodb_print_all_deadlocks: 0
-mysql_innodb_read_io_threads: 4
+mysql_innodb_read_io_threads: "{{ [(ansible_processor_vcpus // 2), 4] | max }}"  # (available logical processors / 2), min of 4
 mysql_innodb_write_io_threads: 4
 
 mysql_max_allowed_packet: "64M"

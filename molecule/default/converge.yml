@@ -5,6 +5,10 @@
   roles:
     - role: boutetnico.percona_mysql
 
+      mysql_mysql_native_password: "ON"
+
+      mysql_innodb_numa_interleave: "OFF"
+
       mysql_load_tz_tables: true
 
       mysql_users:
