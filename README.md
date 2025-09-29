@@ -37,6 +37,7 @@ Role Variables
 | mysql_logdir                              | true     | `/var/log/mysql`         | string    |                                       |
 | mysql_plugindir                           | true     | `/usr/lib/mysql/plugin`  | string    |                                       |
 | mysql_keyringdir                          | true     | `/var/lib/mysql-keyring` | string    |                                       |
+| mysql_bind_address                        | true     | `*`                      | string    |                                       |
 | mysql_sql_mode                            | true     | `''`                     | string    |                                       |
 | mysql_charset                             | true     | `utf8mb4`                | string    |                                       |
 | mysql_collation                           | true     | `utf8mb4_general_ci`     | string    |                                       |
