@@ -33,7 +33,7 @@ Role Variables
 | mysql_group                               | true     | `mysql`                  | string    |                                       |
 | mysql_installdir                          | true     | `/usr/sbin`              | string    |                                       |
 | mysql_datadir                             | true     | `/var/lib/mysql`         | string    |                                       |
-| mysql_tmpdir                              | true     | `/tmp/mysql`             | string    |                                       |
+| mysql_tmpdir                              | true     | `/tmp`                   | string    |                                       |
 | mysql_logdir                              | true     | `/var/log/mysql`         | string    |                                       |
 | mysql_plugindir                           | true     | `/usr/lib/mysql/plugin`  | string    |                                       |
 | mysql_keyringdir                          | true     | `/var/lib/mysql-keyring` | string    |                                       |

@@ -22,9 +22,17 @@
     state: directory
   loop:
     - "{{ mysql_datadir }}"
-    - "{{ mysql_tmpdir }}"
     - "{{ mysql_logdir }}"
     - "{{ mysql_keyringdir }}"
+
+- name: Ensure mysql tmpdir exists if custom
+  ansible.builtin.file:
+    group: "{{ mysql_group }}"
+    mode: "0700"
+    owner: "{{ mysql_user }}"
+    path: "{{ mysql_tmpdir }}"
+    state: directory
+  when: mysql_tmpdir != '/tmp'
 
 - name: Include tasks to setup percona MySQL
   ansible.builtin.import_tasks: setup.yml
