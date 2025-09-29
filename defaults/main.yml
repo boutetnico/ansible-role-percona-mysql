@@ -25,6 +25,8 @@ mysql_logdir: "/var/log/mysql"
 mysql_plugindir: "/usr/lib/mysql/plugin"
 mysql_keyringdir: "/var/lib/mysql-keyring"
 
+mysql_bind_address: "*"
+
 mysql_sql_mode: ''
 mysql_charset: "utf8mb4"
 mysql_collation: "utf8mb4_general_ci"
