@@ -20,7 +20,7 @@ mysql_group: "mysql"
 
 mysql_installdir: "/usr/sbin"
 mysql_datadir: "/var/lib/mysql"
-mysql_tmpdir: "/tmp/mysql"
+mysql_tmpdir: "/tmp"
 mysql_logdir: "/var/log/mysql"
 mysql_plugindir: "/usr/lib/mysql/plugin"
 mysql_keyringdir: "/var/lib/mysql-keyring"
