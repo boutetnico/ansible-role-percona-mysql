@@ -31,8 +31,8 @@ enforce-gtid-consistency=ON
 {%   elif mysql_replication_role == 'slave' %}
 # This is a slave
 relay_log_recovery = {{ mysql_relay_log_recovery }}
-relay_log = {{ ansible_hostname }}-relay-bin
-relay_log_index = {{ ansible_hostname }}-relay-bin.index
+relay_log = {{ ansible_facts['hostname'] }}-relay-bin
+relay_log_index = {{ ansible_facts['hostname'] }}-relay-bin.index
 {%   endif %}
 {% endif %}
 
