@@ -22,11 +22,6 @@ jobs:
         runner:
           - ubuntu-latest
           - ubuntu-24.04-arm
-        scenario:
-          - debian-11
-          - debian-12
-          - ubuntu-2204
-          - ubuntu-2404
 
     steps:
       - uses: actions/checkout@v6
@@ -46,7 +41,7 @@ jobs:
         run: ansible-galaxy role install -r meta/requirements.yml
 
       - name: Run Molecule
-        run: molecule --base-config molecule/shared/base.yml test --scenario-name ${{ matrix.scenario }}
+        run: molecule test
         env:
           ANSIBLE_FORCE_COLOR: "1"
           PY_COLORS: "1"
