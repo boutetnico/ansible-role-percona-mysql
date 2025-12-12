@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: pip install ansible ansible-lint black yamllint
 
+      - name: Install role dependencies
+        run: ansible-galaxy role install -r meta/requirements.yml
+
       - name: Run yamllint
         run: yamllint .
         env:
