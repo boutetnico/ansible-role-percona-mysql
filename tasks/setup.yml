@@ -77,13 +77,6 @@
 
 - name: Ensure python packages are installed
   ansible.builtin.pip:
+    break_system_packages: true
     name: "{{ mysql_pip_packages }}"
     state: present
-    extra_args: --break-system-packages
-  when: ansible_facts['distribution_release'] in ['bookworm', 'noble']
-
-- name: Ensure python packages are installed
-  ansible.builtin.pip:
-    name: "{{ mysql_pip_packages }}"
-    state: present
-  when: not ansible_facts['distribution_release'] in ['bookworm', 'noble']
