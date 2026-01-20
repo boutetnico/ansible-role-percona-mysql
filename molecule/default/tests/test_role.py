@@ -53,6 +53,19 @@ def test_database_created(host):
     assert "testdb" in result.stdout, "Database testdb was not created"
 
 
+def test_database_removed(host):
+    query = "SHOW DATABASES LIKE 'olddb';"
+    result = host.run(f'mysql -e "{query}"')
+    assert "olddb" not in result.stdout, "Database olddb should have been removed"
+
+
+def test_user_removed(host):
+    query = "SELECT user FROM mysql.user WHERE user = 'olduser';"
+    result = host.run(f'mysql -e "{query}"')
+    lines = result.stdout.strip().split("\n")
+    assert len(lines) == 1, "User olduser should have been removed"
+
+
 def test_time_zone_name_rows(host):
     query = "SELECT * FROM mysql.time_zone_name;"
     result = host.run(f'mysql -e "{query}"')
@@ -118,3 +131,10 @@ def test_telemetry_is_not_running_and_disabled(host, name):
     service = host.service(name)
     assert not service.is_enabled
     assert not service.is_running
+
+
+def test_systemd_override_installed(host):
+    override_file = host.file("/etc/systemd/system/mysql.service.d/override.conf")
+    assert override_file.exists
+    assert override_file.is_file
+    assert "LimitNOFILE=65535" in override_file.content_string
