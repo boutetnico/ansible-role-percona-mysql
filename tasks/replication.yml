@@ -22,6 +22,7 @@
       when:
         - (mysql_slave_status.Is_Replica is defined and not mysql_slave_status.Is_Replica)
           or (mysql_slave_status.Is_Replica is not defined and mysql_slave_status is failed)
+      no_log: true
 
     - name: Configure replication options on the slave
       ansible.builtin.command: /usr/bin/mysql -e "CHANGE REPLICATION SOURCE TO {{ item.key }}={{ item.value }};"

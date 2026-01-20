@@ -31,6 +31,7 @@
   loop: "{{ mysql_users }}"
   loop_control:
     label: "{{ item.name }}"
+  no_log: true
 
 - name: Ensure users that should be removed are absent
   community.mysql.mysql_user:
@@ -45,3 +46,4 @@
   loop: "{{ mysql_remove_users }}"
   loop_control:
     label: "{{ item.name }}"
+  no_log: true

@@ -72,6 +72,7 @@
     password: "{{ mysql_root_password }}"
     priv: "{{ mysql_root_privileges }}"
   when: mysql_root_authentication_plugin == 'mysql_native_password'
+  no_log: true
 
 - name: Set MySQL root password (caching_sha2_password)
   community.mysql.mysql_user:
@@ -84,12 +85,14 @@
     priv: "{{ mysql_root_privileges }}"
     salt: "{{ mysql_root_salt }}"
   when: mysql_root_authentication_plugin == 'caching_sha2_password'
+  no_log: true
 
 - name: Copy root .my.cnf with root password
   ansible.builtin.template:
     dest: "/root/.my.cnf"
     mode: "0600"
     src: root/.my.cnf.j2
+  no_log: true
 
 - name: Setup logrotate script
   ansible.builtin.template:
