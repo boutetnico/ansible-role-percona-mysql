@@ -15,7 +15,7 @@
     state: absent
   loop: "{{ mysql_remove_databases }}"
   loop_control:
-    label: "{{ item.name }}"
+    label: "{{ item }}"
 
 - name: Ensure users exists
   community.mysql.mysql_user:

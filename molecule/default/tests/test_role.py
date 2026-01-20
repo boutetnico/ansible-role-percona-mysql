@@ -47,6 +47,12 @@ def test_convert_tz_query(host):
     assert result.stdout.strip() != "NULL", "CONVERT_TZ query returned NULL"
 
 
+def test_database_created(host):
+    query = "SHOW DATABASES LIKE 'testdb';"
+    result = host.run(f'mysql -e "{query}"')
+    assert "testdb" in result.stdout, "Database testdb was not created"
+
+
 def test_time_zone_name_rows(host):
     query = "SELECT * FROM mysql.time_zone_name;"
     result = host.run(f'mysql -e "{query}"')

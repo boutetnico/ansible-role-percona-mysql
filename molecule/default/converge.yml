@@ -11,6 +11,12 @@
 
       mysql_load_tz_tables: true
 
+      mysql_databases:
+        - name: testdb
+
+      mysql_remove_databases:
+        - olddb
+
       mysql_users:
         - name: test_sha2
           plugin_auth_string: test_sha2
@@ -21,3 +27,7 @@
           password: test_native
           plugin: mysql_native_password
           priv: "*.*:ALL"
+
+      mysql_remove_users:
+        - name: olduser
+          host: localhost
