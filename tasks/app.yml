@@ -1,6 +1,6 @@
 ---
 - name: Ensure databases exists
-  community.mysql.mysql_db:
+  ansible.mysql.mysql_db:
     config_file: "/root/.my.cnf"
     name: "{{ item.name }}"
     state: present
@@ -9,7 +9,7 @@
     label: "{{ item.name }}"
 
 - name: Ensure databases that should be removed are absent
-  community.mysql.mysql_db:
+  ansible.mysql.mysql_db:
     config_file: "/root/.my.cnf"
     name: "{{ item }}"
     state: absent
@@ -18,7 +18,7 @@
     label: "{{ item }}"
 
 - name: Ensure users exists
-  community.mysql.mysql_user:
+  ansible.mysql.mysql_user:
     config_file: "/root/.my.cnf"
     host: "{{ item.host | d(omit) }}"
     name: "{{ item.name }}"
@@ -34,7 +34,7 @@
   no_log: true
 
 - name: Ensure users that should be removed are absent
-  community.mysql.mysql_user:
+  ansible.mysql.mysql_user:
     config_file: "/root/.my.cnf"
     host: "{{ item.host | d(omit) }}"
     name: "{{ item.name }}"

@@ -9,7 +9,7 @@ This role installs [Percona Server for MySQL](https://www.percona.com/mysql/soft
 Requirements
 ------------
 
-Ansible 2.10 or newer.
+Ansible 2.16 or newer.
 
 Supported Platforms
 -------------------
