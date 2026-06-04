@@ -5,14 +5,14 @@
     - mysql_replication_master_host != ''
   block:
     - name: Check slave replication status
-      community.mysql.mysql_replication:
+      ansible.mysql.mysql_replication:
         config_file: /root/.my.cnf
         mode: getreplica
       ignore_errors: true
       register: mysql_slave_status
 
     - name: Configure replication on the slave
-      community.mysql.mysql_replication:
+      ansible.mysql.mysql_replication:
         config_file: /root/.my.cnf
         master_host: "{{ mysql_replication_master_host }}"
         master_password: "{{ mysql_replication_master_password }}"
@@ -30,7 +30,7 @@
       changed_when: false
 
     - name: Start replication
-      community.mysql.mysql_replication:
+      ansible.mysql.mysql_replication:
         config_file: /root/.my.cnf
         mode: startreplica
       when:
