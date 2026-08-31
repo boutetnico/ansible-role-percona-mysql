@@ -28,6 +28,9 @@
       ansible.builtin.command: /usr/bin/mysql -e "CHANGE REPLICATION SOURCE TO {{ item.key }}={{ item.value }};"
       loop: "{{ mysql_replication_options | dict2items }}"
       changed_when: false
+      when:
+        - (mysql_slave_status.Is_Replica is defined and not mysql_slave_status.Is_Replica)
+          or (mysql_slave_status.Is_Replica is not defined and mysql_slave_status is failed)
 
     - name: Start replication
       ansible.mysql.mysql_replication:
