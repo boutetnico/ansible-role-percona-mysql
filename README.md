@@ -61,6 +61,7 @@ Role Variables
 | mysql_binlog_expire_logs_seconds          | true     | `2592000`                | int       | Default to 30 days.                   |
 | mysql_enable_bin_logs                     | true     | `true`                   | boolean   |                                       |
 | mysql_max_binlog_size                     | true     | `1G`                     | string    | Size at which the binlog rotates.     |
+| mysql_log_replica_updates                 | true     | `ON`                     | string    | Log replicated events to the binlog.  |
 | mysql_databases                           | true     | `[]`                     | list      | Databases to create.                  |
 | mysql_remove_databases                    | true     | `[]`                     | list      | Databases to remove.                  |
 | mysql_users                               | true     | `[]`                     | list      | Users to create.                      |

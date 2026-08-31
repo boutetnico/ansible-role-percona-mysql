@@ -13,6 +13,8 @@
 
       mysql_max_binlog_size: 256M
 
+      mysql_log_replica_updates: "OFF"
+
       mysql_databases:
         - name: testdb
 

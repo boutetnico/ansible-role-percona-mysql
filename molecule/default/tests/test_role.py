@@ -53,6 +53,19 @@ def test_max_binlog_size(host):
     assert "268435456" in result.stdout, "max_binlog_size was not set to 256M"
 
 
+def test_log_replica_updates(host):
+    # MySQL forces log_replica_updates OFF when binary logging is disabled, so
+    # assert log_bin is ON first, otherwise OFF proves nothing.
+    result = host.run("mysql -e \"SHOW VARIABLES LIKE 'log_bin';\"")
+    assert (
+        "ON" in result.stdout
+    ), "log_bin is off, so log_replica_updates is meaningless"
+
+    query = "SHOW VARIABLES LIKE 'log_replica_updates';"
+    result = host.run(f'mysql -e "{query}"')
+    assert "OFF" in result.stdout, "log_replica_updates was not set to OFF"
+
+
 def test_database_created(host):
     query = "SHOW DATABASES LIKE 'testdb';"
     result = host.run(f'mysql -e "{query}"')
