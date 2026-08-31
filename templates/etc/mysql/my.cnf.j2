@@ -47,6 +47,7 @@ log_bin = {{ mysql_logdir }}/mysql-bin.log
 binlog_do_db  = {{ dbname }}
 {%   endfor %}
 binlog_expire_logs_seconds = {{ mysql_binlog_expire_logs_seconds }}
+max_binlog_size = {{ mysql_max_binlog_size }}
 {% else %}
 skip-log-bin
 {% endif %}

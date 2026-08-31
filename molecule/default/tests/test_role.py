@@ -47,6 +47,12 @@ def test_convert_tz_query(host):
     assert result.stdout.strip() != "NULL", "CONVERT_TZ query returned NULL"
 
 
+def test_max_binlog_size(host):
+    query = "SHOW VARIABLES LIKE 'max_binlog_size';"
+    result = host.run(f'mysql -e "{query}"')
+    assert "268435456" in result.stdout, "max_binlog_size was not set to 256M"
+
+
 def test_database_created(host):
     query = "SHOW DATABASES LIKE 'testdb';"
     result = host.run(f'mysql -e "{query}"')

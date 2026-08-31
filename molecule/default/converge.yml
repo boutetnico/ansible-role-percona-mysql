@@ -11,6 +11,8 @@
 
       mysql_load_tz_tables: true
 
+      mysql_max_binlog_size: 256M
+
       mysql_databases:
         - name: testdb
 
